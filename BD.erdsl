@@ -1,0 +1,75 @@
+
+Generate All;
+
+Domain Name;
+
+Entities {
+	CD_Eleicao {
+    	CD_TIPO_eleicao int,
+    	CD_eleicao int
+    	}
+	NM_eleicao {
+    	DS_eleicao int,
+    	MN_TIPO_eleicao String
+	}
+	
+	TR_eleicao {
+    	NR_turno int,
+    	NR_abrangencia int
+	}
+	CD_localizacao {
+    	SG_UE string,
+    	CD_municipio String,
+    	SG_UF string
+	}
+	NM_localizacao {
+    	NM_municipio string,
+    	NM_UE String
+
+	}
+    LC_votacao{
+    	NR_zona int,
+    	NM_municipio string
+    	
+	}
+	 TP_eleicao{
+    	CD_TIPO_eleicao int,
+    	CD_eleicao int    	
+	}
+	 Cargo{
+    	CD_cargo int,
+    	DS_cargo string
+    }
+     Candidato{
+    	NR_votavel int,
+    	NM_votavel string
+    }
+     LC_candidato{
+    	SG_UF int,
+    	CD_municipio string
+    }
+    Votos{
+    	QT_votos int
+    }
+     DT_eleicao{
+    	AA_eleicao datetime,
+    	DT_eleicao datetime
+    }
+     DT_geracao{
+    	DT_geracao datetime,
+    	HH_geracao datetime
+    }
+};
+
+Relationships {
+		Relationship1 [CD_eleicao (1:N) relates (1:N) NM_eleicao] {CD_TIPO_eleicao int, DS_eleicao int}
+		Relationship2 [TP_eleicao (1:N) relates (1:N) TR_eleicao] 
+		Relationship3 [CD_localizacao (1:1) relates (1:1) NM_localizacao] {SG_UE string,CD_municipio String,NM_municipio string}
+		Relationship4 [LC_votacao (N:N) relates (N:N) NM_localizacao] {NR_zona int,NM_municipio string}
+		Relationship5 [TP_eleicao (1:N) relates (1:N) CD_localizacao] {CD_TIPO_eleicao SG_UE string}
+		Relationship6 [Cargo (1:N) relates (1:N) Candidato] {CD_cargo int,NR_votavel int}
+		Relationship7 [Candidato (1:N) relates (1:N) LC_candidato] {CD_cargo int,SG_UF int}
+		Relationship8 [Candidato (N:N) relates (N:N) Votos] {NR_votavel int,QT_votos int}
+		Relationship9 [DT_eleicao (1:1) relates (1:1) NM_eleicao] {AA_eleicao datetime,DT_eleicao datetime,MN_TIPO_eleicao String}
+		Relationship10 [DT_eleicao (1:1) relates (1:1) DT_geracao] {AA_eleicao datetime,DT_eleicao datetime,DT_geracao datetime,HH_geracao datetime}
+};
