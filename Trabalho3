@@ -1,0 +1,455 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 10.19
+-- Dumped by pg_dump version 10.19
+
+-- Started on 2022-02-28 19:31:13
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 1 (class 3079 OID 12924)
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- TOC entry 2888 (class 0 OID 0)
+-- Dependencies: 1
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 204 (class 1259 OID 32832)
+-- Name: candidato; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.candidato (
+    "NR-Votável" integer NOT NULL,
+    "NM-Votável" character varying
+);
+
+
+ALTER TABLE public.candidato OWNER TO postgres;
+
+--
+-- TOC entry 203 (class 1259 OID 32824)
+-- Name: cargo; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.cargo (
+    "CD-Cargo" integer NOT NULL,
+    "DS-Cargo" character varying
+);
+
+
+ALTER TABLE public.cargo OWNER TO postgres;
+
+--
+-- TOC entry 201 (class 1259 OID 32809)
+-- Name: códigoeleição; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."códigoeleição" (
+    "CD-Eleição" integer NOT NULL,
+    "CD-Tipo-Eleição" integer
+);
+
+
+ALTER TABLE public."códigoeleição" OWNER TO postgres;
+
+--
+-- TOC entry 198 (class 1259 OID 32789)
+-- Name: códigolocalização; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."códigolocalização" (
+    "SG-UE" character varying(2) NOT NULL,
+    "CD-MUNICÍPIO" integer NOT NULL,
+    "SG-UF" character varying(2)
+);
+
+
+ALTER TABLE public."códigolocalização" OWNER TO postgres;
+
+--
+-- TOC entry 207 (class 1259 OID 32909)
+-- Name: dataeleição; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."dataeleição" (
+    "ANO-Eleição" integer NOT NULL,
+    "DT-Eleição" date NOT NULL
+);
+
+
+ALTER TABLE public."dataeleição" OWNER TO postgres;
+
+--
+-- TOC entry 208 (class 1259 OID 32914)
+-- Name: datageração; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."datageração" (
+    "DT-Geração" date NOT NULL,
+    "HH-Geração" time without time zone NOT NULL
+);
+
+
+ALTER TABLE public."datageração" OWNER TO postgres;
+
+--
+-- TOC entry 205 (class 1259 OID 32896)
+-- Name: localcandidato; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.localcandidato (
+    "SG-UF" character varying NOT NULL,
+    "CD-MUNICÍPIO" integer
+);
+
+
+ALTER TABLE public.localcandidato OWNER TO postgres;
+
+--
+-- TOC entry 200 (class 1259 OID 32799)
+-- Name: localvotação; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."localvotação" (
+    "NR-Zona" integer NOT NULL,
+    "NR-Seção" integer
+);
+
+
+ALTER TABLE public."localvotação" OWNER TO postgres;
+
+--
+-- TOC entry 196 (class 1259 OID 32779)
+-- Name: nomeeleição; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."nomeeleição" (
+    "DS-Eleição" character varying(30) NOT NULL,
+    "NM-Tipo-Eleição" character varying(30) NOT NULL
+);
+
+
+ALTER TABLE public."nomeeleição" OWNER TO postgres;
+
+--
+-- TOC entry 199 (class 1259 OID 32794)
+-- Name: nomelocalização; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."nomelocalização" (
+    "NM-UE" character varying(30) NOT NULL,
+    "NM-Município" character varying(30) NOT NULL
+);
+
+
+ALTER TABLE public."nomelocalização" OWNER TO postgres;
+
+--
+-- TOC entry 202 (class 1259 OID 32814)
+-- Name: tipoeleição; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."tipoeleição" (
+    "CD-Tipo-Eleição" integer NOT NULL,
+    "CD-Eleição" integer
+);
+
+
+ALTER TABLE public."tipoeleição" OWNER TO postgres;
+
+--
+-- TOC entry 197 (class 1259 OID 32784)
+-- Name: turnoeleiçao; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."turnoeleiçao" (
+    "NR-Turno" integer NOT NULL,
+    "TP-Abrangencia" integer NOT NULL
+);
+
+
+ALTER TABLE public."turnoeleiçao" OWNER TO postgres;
+
+--
+-- TOC entry 206 (class 1259 OID 32904)
+-- Name: votos; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.votos (
+    "QT-Votos" integer NOT NULL
+);
+
+
+ALTER TABLE public.votos OWNER TO postgres;
+
+--
+-- TOC entry 2876 (class 0 OID 32832)
+-- Dependencies: 204
+-- Data for Name: candidato; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2875 (class 0 OID 32824)
+-- Dependencies: 203
+-- Data for Name: cargo; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2873 (class 0 OID 32809)
+-- Dependencies: 201
+-- Data for Name: códigoeleição; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2870 (class 0 OID 32789)
+-- Dependencies: 198
+-- Data for Name: códigolocalização; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2879 (class 0 OID 32909)
+-- Dependencies: 207
+-- Data for Name: dataeleição; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2880 (class 0 OID 32914)
+-- Dependencies: 208
+-- Data for Name: datageração; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2877 (class 0 OID 32896)
+-- Dependencies: 205
+-- Data for Name: localcandidato; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2872 (class 0 OID 32799)
+-- Dependencies: 200
+-- Data for Name: localvotação; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2868 (class 0 OID 32779)
+-- Dependencies: 196
+-- Data for Name: nomeeleição; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2871 (class 0 OID 32794)
+-- Dependencies: 199
+-- Data for Name: nomelocalização; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2874 (class 0 OID 32814)
+-- Dependencies: 202
+-- Data for Name: tipoeleição; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2869 (class 0 OID 32784)
+-- Dependencies: 197
+-- Data for Name: turnoeleiçao; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2878 (class 0 OID 32904)
+-- Dependencies: 206
+-- Data for Name: votos; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2736 (class 2606 OID 32839)
+-- Name: candidato candidato_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.candidato
+    ADD CONSTRAINT candidato_pkey PRIMARY KEY ("NR-Votável");
+
+
+--
+-- TOC entry 2734 (class 2606 OID 32831)
+-- Name: cargo cargo_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cargo
+    ADD CONSTRAINT cargo_pkey PRIMARY KEY ("CD-Cargo");
+
+
+--
+-- TOC entry 2730 (class 2606 OID 32813)
+-- Name: códigoeleição códigoeleição_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."códigoeleição"
+    ADD CONSTRAINT "códigoeleição_pkey" PRIMARY KEY ("CD-Eleição");
+
+
+--
+-- TOC entry 2724 (class 2606 OID 32793)
+-- Name: códigolocalização códigolocalização_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."códigolocalização"
+    ADD CONSTRAINT "códigolocalização_pkey" PRIMARY KEY ("CD-MUNICÍPIO");
+
+
+--
+-- TOC entry 2742 (class 2606 OID 32913)
+-- Name: dataeleição dataeleição_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."dataeleição"
+    ADD CONSTRAINT "dataeleição_pkey" PRIMARY KEY ("ANO-Eleição");
+
+
+--
+-- TOC entry 2744 (class 2606 OID 32918)
+-- Name: datageração datageração_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."datageração"
+    ADD CONSTRAINT "datageração_pkey" PRIMARY KEY ("DT-Geração");
+
+
+--
+-- TOC entry 2738 (class 2606 OID 32903)
+-- Name: localcandidato localcandidato_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.localcandidato
+    ADD CONSTRAINT localcandidato_pkey PRIMARY KEY ("SG-UF");
+
+
+--
+-- TOC entry 2728 (class 2606 OID 32803)
+-- Name: localvotação localvotação_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."localvotação"
+    ADD CONSTRAINT "localvotação_pkey" PRIMARY KEY ("NR-Zona");
+
+
+--
+-- TOC entry 2720 (class 2606 OID 32783)
+-- Name: nomeeleição nomeeleição_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."nomeeleição"
+    ADD CONSTRAINT "nomeeleição_pkey" PRIMARY KEY ("DS-Eleição");
+
+
+--
+-- TOC entry 2726 (class 2606 OID 32798)
+-- Name: nomelocalização nomelocalização_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."nomelocalização"
+    ADD CONSTRAINT "nomelocalização_pkey" PRIMARY KEY ("NM-UE");
+
+
+--
+-- TOC entry 2732 (class 2606 OID 32818)
+-- Name: tipoeleição tipoeleição_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."tipoeleição"
+    ADD CONSTRAINT "tipoeleição_pkey" PRIMARY KEY ("CD-Tipo-Eleição");
+
+
+--
+-- TOC entry 2722 (class 2606 OID 32788)
+-- Name: turnoeleiçao turnoeleiçao_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."turnoeleiçao"
+    ADD CONSTRAINT "turnoeleiçao_pkey" PRIMARY KEY ("NR-Turno");
+
+
+--
+-- TOC entry 2740 (class 2606 OID 32908)
+-- Name: votos votos_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.votos
+    ADD CONSTRAINT votos_pkey PRIMARY KEY ("QT-Votos");
+
+
+--
+-- TOC entry 2745 (class 2606 OID 32919)
+-- Name: códigoeleição códigoeleição_CD-Tipo-Eleição_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."códigoeleição"
+    ADD CONSTRAINT "códigoeleição_CD-Tipo-Eleição_fkey" FOREIGN KEY ("CD-Tipo-Eleição") REFERENCES public."tipoeleição"("CD-Tipo-Eleição");
+
+
+--
+-- TOC entry 2746 (class 2606 OID 32819)
+-- Name: tipoeleição tipoeleição_CD-Eleição_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."tipoeleição"
+    ADD CONSTRAINT "tipoeleição_CD-Eleição_fkey" FOREIGN KEY ("CD-Eleição") REFERENCES public."códigoeleição"("CD-Eleição");
+
+
+-- Completed on 2022-02-28 19:31:13
+
+--
+-- PostgreSQL database dump complete
+--
+
