@@ -1,0 +1,503 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 14.1
+-- Dumped by pg_dump version 14.1
+
+-- Started on 2022-03-07 13:17:56
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 3 (class 2615 OID 2200)
+-- Name: eleicoes; Type: SCHEMA; Schema: -; Owner: postgres
+--
+
+CREATE SCHEMA eleicoes;
+
+
+ALTER SCHEMA eleicoes OWNER TO postgres;
+
+--
+-- TOC entry 3395 (class 0 OID 0)
+-- Dependencies: 3
+-- Name: SCHEMA eleicoes; Type: COMMENT; Schema: -; Owner: postgres
+--
+
+COMMENT ON SCHEMA eleicoes IS 'standard public schema';
+
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- TOC entry 215 (class 1259 OID 16569)
+-- Name: cargocandidato; Type: TABLE; Schema: eleicoes; Owner: postgres
+--
+
+CREATE TABLE eleicoes.cargocandidato (
+    "cd-cargo" integer[] NOT NULL,
+    "ds-cargo" character varying[],
+    "sg-uf" character varying[]
+);
+
+
+ALTER TABLE eleicoes.cargocandidato OWNER TO postgres;
+
+--
+-- TOC entry 209 (class 1259 OID 16493)
+-- Name: cdeleicao; Type: TABLE; Schema: eleicoes; Owner: postgres
+--
+
+CREATE TABLE eleicoes.cdeleicao (
+    "cd-eleicao" integer[] NOT NULL,
+    "cd-tipo-eleicao" integer[] NOT NULL
+);
+
+
+ALTER TABLE eleicoes.cdeleicao OWNER TO postgres;
+
+--
+-- TOC entry 218 (class 1259 OID 16605)
+-- Name: dataeleicao; Type: TABLE; Schema: eleicoes; Owner: postgres
+--
+
+CREATE TABLE eleicoes.dataeleicao (
+    "ano-eleicao" integer[] NOT NULL,
+    "dt-eleicao" integer[] NOT NULL,
+    "cd-eleicao" integer[] NOT NULL
+);
+
+
+ALTER TABLE eleicoes.dataeleicao OWNER TO postgres;
+
+--
+-- TOC entry 219 (class 1259 OID 16617)
+-- Name: datageracao; Type: TABLE; Schema: eleicoes; Owner: postgres
+--
+
+CREATE TABLE eleicoes.datageracao (
+    "dt-geracao" integer[] NOT NULL,
+    "hh-geracao" integer[] NOT NULL,
+    "cd-eleicao" integer[] NOT NULL
+);
+
+
+ALTER TABLE eleicoes.datageracao OWNER TO postgres;
+
+--
+-- TOC entry 213 (class 1259 OID 16550)
+-- Name: localeleicao; Type: TABLE; Schema: eleicoes; Owner: postgres
+--
+
+CREATE TABLE eleicoes.localeleicao (
+    "sg-uf" character varying[] NOT NULL,
+    "sg-ue" integer[] NOT NULL,
+    "cd-municipio" integer[] NOT NULL
+);
+
+
+ALTER TABLE eleicoes.localeleicao OWNER TO postgres;
+
+--
+-- TOC entry 212 (class 1259 OID 16515)
+-- Name: localvotacao; Type: TABLE; Schema: eleicoes; Owner: postgres
+--
+
+CREATE TABLE eleicoes.localvotacao (
+    "nr-zona" integer[] NOT NULL,
+    "nr-secao" integer[] NOT NULL,
+    "cd-municipio" integer[] NOT NULL
+);
+
+
+ALTER TABLE eleicoes.localvotacao OWNER TO postgres;
+
+--
+-- TOC entry 210 (class 1259 OID 16501)
+-- Name: nomeeleicao; Type: TABLE; Schema: eleicoes; Owner: postgres
+--
+
+CREATE TABLE eleicoes.nomeeleicao (
+    "ds-eleicao" character varying[] NOT NULL,
+    "nm-tipo-eleicao" character varying[] NOT NULL
+);
+
+
+ALTER TABLE eleicoes.nomeeleicao OWNER TO postgres;
+
+--
+-- TOC entry 214 (class 1259 OID 16562)
+-- Name: nomelocalvotacao; Type: TABLE; Schema: eleicoes; Owner: postgres
+--
+
+CREATE TABLE eleicoes.nomelocalvotacao (
+    "nm-ue" character varying[] NOT NULL,
+    "nm-municipio" character varying[] NOT NULL
+);
+
+
+ALTER TABLE eleicoes.nomelocalvotacao OWNER TO postgres;
+
+--
+-- TOC entry 217 (class 1259 OID 16593)
+-- Name: numerocandidato; Type: TABLE; Schema: eleicoes; Owner: postgres
+--
+
+CREATE TABLE eleicoes.numerocandidato (
+    "nr-votavel" integer[] NOT NULL,
+    "nm-votavel" character varying[] NOT NULL,
+    "cd-cargo" integer[] NOT NULL
+);
+
+
+ALTER TABLE eleicoes.numerocandidato OWNER TO postgres;
+
+--
+-- TOC entry 216 (class 1259 OID 16581)
+-- Name: tipoeleicao; Type: TABLE; Schema: eleicoes; Owner: postgres
+--
+
+CREATE TABLE eleicoes.tipoeleicao (
+    "cd-tipo-eleicao" integer[] NOT NULL,
+    "cd-eleicao" integer[] NOT NULL,
+    "cd-cargo" integer[] NOT NULL
+);
+
+
+ALTER TABLE eleicoes.tipoeleicao OWNER TO postgres;
+
+--
+-- TOC entry 211 (class 1259 OID 16508)
+-- Name: turnoeleicao; Type: TABLE; Schema: eleicoes; Owner: postgres
+--
+
+CREATE TABLE eleicoes.turnoeleicao (
+    "nr-turno" integer[] NOT NULL,
+    "tp-abrangecia" character varying[] NOT NULL
+);
+
+
+ALTER TABLE eleicoes.turnoeleicao OWNER TO postgres;
+
+--
+-- TOC entry 220 (class 1259 OID 16629)
+-- Name: votoscandidato; Type: TABLE; Schema: eleicoes; Owner: postgres
+--
+
+CREATE TABLE eleicoes.votoscandidato (
+    "qt-votos" integer[] NOT NULL,
+    "nr-turno" integer[] NOT NULL,
+    "cd-eleicao" integer[] NOT NULL
+);
+
+
+ALTER TABLE eleicoes.votoscandidato OWNER TO postgres;
+
+--
+-- TOC entry 3384 (class 0 OID 16569)
+-- Dependencies: 215
+-- Data for Name: cargocandidato; Type: TABLE DATA; Schema: eleicoes; Owner: postgres
+--
+
+INSERT INTO eleicoes.cargocandidato ("cd-cargo", "ds-cargo", "sg-uf") VALUES ('{13}', '{VEREADOR}', '{RS}');
+INSERT INTO eleicoes.cargocandidato ("cd-cargo", "ds-cargo", "sg-uf") VALUES ('{11}', '{PREFEITO}', '{RS}');
+
+
+--
+-- TOC entry 3378 (class 0 OID 16493)
+-- Dependencies: 209
+-- Data for Name: cdeleicao; Type: TABLE DATA; Schema: eleicoes; Owner: postgres
+--
+
+INSERT INTO eleicoes.cdeleicao ("cd-eleicao", "cd-tipo-eleicao") VALUES ('{426}', '{2}');
+
+
+--
+-- TOC entry 3387 (class 0 OID 16605)
+-- Dependencies: 218
+-- Data for Name: dataeleicao; Type: TABLE DATA; Schema: eleicoes; Owner: postgres
+--
+
+INSERT INTO eleicoes.dataeleicao ("ano-eleicao", "dt-eleicao", "cd-eleicao") VALUES ('{2020}', '{2112}', '{426}');
+
+
+--
+-- TOC entry 3388 (class 0 OID 16617)
+-- Dependencies: 219
+-- Data for Name: datageracao; Type: TABLE DATA; Schema: eleicoes; Owner: postgres
+--
+
+INSERT INTO eleicoes.datageracao ("dt-geracao", "hh-geracao", "cd-eleicao") VALUES ('{21122020}', '{16}', '{426}');
+
+
+--
+-- TOC entry 3382 (class 0 OID 16550)
+-- Dependencies: 213
+-- Data for Name: localeleicao; Type: TABLE DATA; Schema: eleicoes; Owner: postgres
+--
+
+INSERT INTO eleicoes.localeleicao ("sg-uf", "sg-ue", "cd-municipio") VALUES ('{RS}', '{88773}', '{88773}');
+
+
+--
+-- TOC entry 3381 (class 0 OID 16515)
+-- Dependencies: 212
+-- Data for Name: localvotacao; Type: TABLE DATA; Schema: eleicoes; Owner: postgres
+--
+
+INSERT INTO eleicoes.localvotacao ("nr-zona", "nr-secao", "cd-municipio") VALUES ('{51}', '{150}', '{88773}');
+
+
+--
+-- TOC entry 3379 (class 0 OID 16501)
+-- Dependencies: 210
+-- Data for Name: nomeeleicao; Type: TABLE DATA; Schema: eleicoes; Owner: postgres
+--
+
+INSERT INTO eleicoes.nomeeleicao ("ds-eleicao", "nm-tipo-eleicao") VALUES ('{"ELEIÇÕES MUNICIPAIS 2020"}', '{"ELEIÇÃO ORDINÁRIA"}');
+
+
+--
+-- TOC entry 3383 (class 0 OID 16562)
+-- Dependencies: 214
+-- Data for Name: nomelocalvotacao; Type: TABLE DATA; Schema: eleicoes; Owner: postgres
+--
+
+INSERT INTO eleicoes.nomelocalvotacao ("nm-ue", "nm-municipio") VALUES ('{"SÃO LEOPOLDO"}', '{"SÃO LEOPOLDO"}');
+
+
+--
+-- TOC entry 3386 (class 0 OID 16593)
+-- Dependencies: 217
+-- Data for Name: numerocandidato; Type: TABLE DATA; Schema: eleicoes; Owner: postgres
+--
+
+INSERT INTO eleicoes.numerocandidato ("nr-votavel", "nm-votavel", "cd-cargo") VALUES ('{23}', '{"RONALDO TEIXEIRA DA SILVA"}', '{13}');
+INSERT INTO eleicoes.numerocandidato ("nr-votavel", "nm-votavel", "cd-cargo") VALUES ('{25}', '{"HELIOMAR ATHAYDES FRANCO"}', '{13}');
+
+
+--
+-- TOC entry 3385 (class 0 OID 16581)
+-- Dependencies: 216
+-- Data for Name: tipoeleicao; Type: TABLE DATA; Schema: eleicoes; Owner: postgres
+--
+
+INSERT INTO eleicoes.tipoeleicao ("cd-tipo-eleicao", "cd-eleicao", "cd-cargo") VALUES ('{2}', '{426}', '{13}');
+
+
+--
+-- TOC entry 3380 (class 0 OID 16508)
+-- Dependencies: 211
+-- Data for Name: turnoeleicao; Type: TABLE DATA; Schema: eleicoes; Owner: postgres
+--
+
+INSERT INTO eleicoes.turnoeleicao ("nr-turno", "tp-abrangecia") VALUES ('{1}', '{m}');
+
+
+--
+-- TOC entry 3389 (class 0 OID 16629)
+-- Dependencies: 220
+-- Data for Name: votoscandidato; Type: TABLE DATA; Schema: eleicoes; Owner: postgres
+--
+
+INSERT INTO eleicoes.votoscandidato ("qt-votos", "nr-turno", "cd-eleicao") VALUES ('{842}', '{1}', '{426}');
+
+
+--
+-- TOC entry 3220 (class 2606 OID 16575)
+-- Name: cargocandidato cargocandidato_pkey; Type: CONSTRAINT; Schema: eleicoes; Owner: postgres
+--
+
+ALTER TABLE ONLY eleicoes.cargocandidato
+    ADD CONSTRAINT cargocandidato_pkey PRIMARY KEY ("cd-cargo");
+
+
+--
+-- TOC entry 3208 (class 2606 OID 16499)
+-- Name: cdeleicao cdeleicao_pkey; Type: CONSTRAINT; Schema: eleicoes; Owner: postgres
+--
+
+ALTER TABLE ONLY eleicoes.cdeleicao
+    ADD CONSTRAINT cdeleicao_pkey PRIMARY KEY ("cd-eleicao");
+
+
+--
+-- TOC entry 3226 (class 2606 OID 16611)
+-- Name: dataeleicao dataeleicao_pkey; Type: CONSTRAINT; Schema: eleicoes; Owner: postgres
+--
+
+ALTER TABLE ONLY eleicoes.dataeleicao
+    ADD CONSTRAINT dataeleicao_pkey PRIMARY KEY ("ano-eleicao");
+
+
+--
+-- TOC entry 3228 (class 2606 OID 16623)
+-- Name: datageracao datageracao_pkey; Type: CONSTRAINT; Schema: eleicoes; Owner: postgres
+--
+
+ALTER TABLE ONLY eleicoes.datageracao
+    ADD CONSTRAINT datageracao_pkey PRIMARY KEY ("dt-geracao");
+
+
+--
+-- TOC entry 3216 (class 2606 OID 16556)
+-- Name: localeleicao localeleicao_pkey; Type: CONSTRAINT; Schema: eleicoes; Owner: postgres
+--
+
+ALTER TABLE ONLY eleicoes.localeleicao
+    ADD CONSTRAINT localeleicao_pkey PRIMARY KEY ("sg-uf");
+
+
+--
+-- TOC entry 3214 (class 2606 OID 16521)
+-- Name: localvotacao localvotacao_pkey; Type: CONSTRAINT; Schema: eleicoes; Owner: postgres
+--
+
+ALTER TABLE ONLY eleicoes.localvotacao
+    ADD CONSTRAINT localvotacao_pkey PRIMARY KEY ("cd-municipio");
+
+
+--
+-- TOC entry 3210 (class 2606 OID 16507)
+-- Name: nomeeleicao nomeeleicao_pkey; Type: CONSTRAINT; Schema: eleicoes; Owner: postgres
+--
+
+ALTER TABLE ONLY eleicoes.nomeeleicao
+    ADD CONSTRAINT nomeeleicao_pkey PRIMARY KEY ("ds-eleicao");
+
+
+--
+-- TOC entry 3218 (class 2606 OID 16568)
+-- Name: nomelocalvotacao nomelocalvotacao_pkey; Type: CONSTRAINT; Schema: eleicoes; Owner: postgres
+--
+
+ALTER TABLE ONLY eleicoes.nomelocalvotacao
+    ADD CONSTRAINT nomelocalvotacao_pkey PRIMARY KEY ("nm-ue");
+
+
+--
+-- TOC entry 3224 (class 2606 OID 16599)
+-- Name: numerocandidato numerocandidato_pkey; Type: CONSTRAINT; Schema: eleicoes; Owner: postgres
+--
+
+ALTER TABLE ONLY eleicoes.numerocandidato
+    ADD CONSTRAINT numerocandidato_pkey PRIMARY KEY ("nr-votavel");
+
+
+--
+-- TOC entry 3222 (class 2606 OID 16587)
+-- Name: tipoeleicao tipoeleicao_pkey; Type: CONSTRAINT; Schema: eleicoes; Owner: postgres
+--
+
+ALTER TABLE ONLY eleicoes.tipoeleicao
+    ADD CONSTRAINT tipoeleicao_pkey PRIMARY KEY ("cd-tipo-eleicao");
+
+
+--
+-- TOC entry 3212 (class 2606 OID 16514)
+-- Name: turnoeleicao turnoeleicao_pkey; Type: CONSTRAINT; Schema: eleicoes; Owner: postgres
+--
+
+ALTER TABLE ONLY eleicoes.turnoeleicao
+    ADD CONSTRAINT turnoeleicao_pkey PRIMARY KEY ("nr-turno");
+
+
+--
+-- TOC entry 3230 (class 2606 OID 16635)
+-- Name: votoscandidato votoscandidato_pkey; Type: CONSTRAINT; Schema: eleicoes; Owner: postgres
+--
+
+ALTER TABLE ONLY eleicoes.votoscandidato
+    ADD CONSTRAINT votoscandidato_pkey PRIMARY KEY ("qt-votos");
+
+
+--
+-- TOC entry 3235 (class 2606 OID 16612)
+-- Name: dataeleicao fk_cddata; Type: FK CONSTRAINT; Schema: eleicoes; Owner: postgres
+--
+
+ALTER TABLE ONLY eleicoes.dataeleicao
+    ADD CONSTRAINT fk_cddata FOREIGN KEY ("cd-eleicao") REFERENCES eleicoes.cdeleicao("cd-eleicao");
+
+
+--
+-- TOC entry 3236 (class 2606 OID 16624)
+-- Name: datageracao fk_cddatag; Type: FK CONSTRAINT; Schema: eleicoes; Owner: postgres
+--
+
+ALTER TABLE ONLY eleicoes.datageracao
+    ADD CONSTRAINT fk_cddatag FOREIGN KEY ("cd-eleicao") REFERENCES eleicoes.cdeleicao("cd-eleicao");
+
+
+--
+-- TOC entry 3237 (class 2606 OID 16636)
+-- Name: votoscandidato fk_cddatag; Type: FK CONSTRAINT; Schema: eleicoes; Owner: postgres
+--
+
+ALTER TABLE ONLY eleicoes.votoscandidato
+    ADD CONSTRAINT fk_cddatag FOREIGN KEY ("cd-eleicao") REFERENCES eleicoes.cdeleicao("cd-eleicao");
+
+
+--
+-- TOC entry 3232 (class 2606 OID 16576)
+-- Name: cargocandidato fk_loccarg; Type: FK CONSTRAINT; Schema: eleicoes; Owner: postgres
+--
+
+ALTER TABLE ONLY eleicoes.cargocandidato
+    ADD CONSTRAINT fk_loccarg FOREIGN KEY ("sg-uf") REFERENCES eleicoes.localeleicao("sg-uf");
+
+
+--
+-- TOC entry 3231 (class 2606 OID 16557)
+-- Name: localeleicao fk_loctipo; Type: FK CONSTRAINT; Schema: eleicoes; Owner: postgres
+--
+
+ALTER TABLE ONLY eleicoes.localeleicao
+    ADD CONSTRAINT fk_loctipo FOREIGN KEY ("cd-municipio") REFERENCES eleicoes.localvotacao("cd-municipio");
+
+
+--
+-- TOC entry 3234 (class 2606 OID 16600)
+-- Name: numerocandidato fk_numcarg; Type: FK CONSTRAINT; Schema: eleicoes; Owner: postgres
+--
+
+ALTER TABLE ONLY eleicoes.numerocandidato
+    ADD CONSTRAINT fk_numcarg FOREIGN KEY ("cd-cargo") REFERENCES eleicoes.cargocandidato("cd-cargo");
+
+
+--
+-- TOC entry 3233 (class 2606 OID 16588)
+-- Name: tipoeleicao fk_tipcarg; Type: FK CONSTRAINT; Schema: eleicoes; Owner: postgres
+--
+
+ALTER TABLE ONLY eleicoes.tipoeleicao
+    ADD CONSTRAINT fk_tipcarg FOREIGN KEY ("cd-cargo") REFERENCES eleicoes.cargocandidato("cd-cargo");
+
+
+--
+-- TOC entry 3238 (class 2606 OID 16641)
+-- Name: votoscandidato fk_turvot; Type: FK CONSTRAINT; Schema: eleicoes; Owner: postgres
+--
+
+ALTER TABLE ONLY eleicoes.votoscandidato
+    ADD CONSTRAINT fk_turvot FOREIGN KEY ("nr-turno") REFERENCES eleicoes.turnoeleicao("nr-turno");
+
+
+-- Completed on 2022-03-07 13:17:57
+
+--
+-- PostgreSQL database dump complete
+--
+
