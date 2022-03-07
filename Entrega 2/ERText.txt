@@ -1,0 +1,77 @@
+Generate All;
+
+Domain TemplateModel;
+
+Entities {
+
+    CdEleicao {
+        cdEleicao int isIdentifier,
+        cdTipoEleicao int
+    }
+
+    NomeEleicao {
+        dsEleicao string isIdentifier,
+        nmTipoEleicao string
+    }
+
+    TurnoEleicao {
+        nrTurno int isIdentifier,
+        tpAbrengecia string
+    }
+
+    LocalEleicao {
+        sgUf string isIdentifier,
+        sgUe int
+    }
+
+    NomeLocalEleicao {
+        nmUe string isIdentifier,
+        nmMunicipio string
+    }
+
+    LocalVotacao {
+        cdMunicipio int isIdentifier,
+        nmZona int,
+        nrSecao int
+    }
+
+    TipoEleicao {
+        cdTipoEleicao int isIdentifier,
+        cdEleicao int
+    }
+
+    CargoCandidato {
+        cdCargo int isIdentifier,
+        dsCargo string
+    }
+
+    NumeroCandidato {
+        nrVotavel int isIdentifier,
+        nmVotavel string
+    }
+
+    VotosCandidato {
+        qtVotos int isIdentifier
+    }
+
+    DataEleicao {
+        anoEleicao dateTime isIdentifier,
+        dtEleicao dateTime
+    }
+
+    DataGeracao {
+        dtGEracao dateTime isIdentifier,
+        hhGeracao dateTime
+    }
+};
+
+Relationships {
+        TipoEleicao [TipoEleicao (1:N) relates (1:N) CargoCandidato] {cdCargo int}
+        CargoCandidato [CargoCandidato (1:1) relates (1:1) LocalEleicao]{sgUf string}
+        NumeroCandidato [NumeroCandidato (1:1) relates (1:N) CargoCandidato]{cdCargo int}
+        LocalCandidato [LocalEleicao (1:N) relates (1:N) LocalVotacao] {cdMunicipio int,sgUf string}
+        LocalCandidatol [LocalCandidato (1:N) relates (1:N) CargoCandidato] {cdCargo int}
+        VotosCandidato [TurnoEleicao (1:1) relates (1:N) CdEleicao] {nrTurno int,cdEleicao int}
+        DataEleicao [DataEleicao (1:1) relates (1:1) CdEleicao] {cdEleicao int}
+        DataGeracao [DataGeracao (1:1) relates (1:N) CdEleicao] {cdEleicao int}
+};
