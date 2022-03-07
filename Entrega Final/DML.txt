@@ -1,0 +1,23 @@
+SELECT "nr-votavel" FROM eleicoes.numerocandidato
+UNION
+SELECT "sg-ue" FROM eleicoes.localeleicao
+SELECT "nm-votavel" FROM eleicoes.numerocandidato
+UNION
+SELECT "sg-uf" FROM eleicoes.localeleicao
+SELECT "cd-cargo" FROM eleicoes.cargocandidato
+UNION
+SELECT "cd-municipio" FROM eleicoes.localvotacao
+SELECT "cd-eleicao" FROM eleicoes.cdeleicao
+UNION
+SELECT "ano-eleicao" FROM eleicoes.dataeleicao
+SELECT "nm-votavel" FROM eleicoes.numerocandidato
+SELECT  "cd-eleicao" FROM eleicoes.cd_eleicao WHERE "cd-tipo-eleicao" = '2'
+SELECT "nr-votavel" FROM eleicoes.numerocandidato
+UNION
+SELECT "sg-ue" FROM eleicoes.localeleicao
+SELECT * FROM eleicoes.localvotacao
+ORDER BY "cd-municipio" ASC 
+SELECT * FROM eleicoes.numerocandidato
+ORDER BY "nr-votavel" ASC 
+SELECT * FROM eleicoes.tipoeleicao
+ORDER BY "cd-tipo-eleicao" ASC
