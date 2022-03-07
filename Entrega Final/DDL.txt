@@ -1,0 +1,191 @@
+CREATE TABLE IF NOT EXISTS eleicoes.cargocandidato
+(
+    "cd-cargo" integer[] NOT NULL,
+    "ds-cargo" character varying[] COLLATE pg_catalog."default" NOT NULL,
+    "sg-uf" character varying[] COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT cargocandidato_pkey PRIMARY KEY ("cd-cargo"),
+    CONSTRAINT fk_loccarg FOREIGN KEY ("sg-uf")
+        REFERENCES eleicoes.localeleicao ("sg-uf") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS eleicoes.cargocandidato
+    OWNER to postgres;
+
+GRANT ALL ON TABLE eleicoes.cargocandidato TO postgres;
+CREATE TABLE IF NOT EXISTS eleicoes.cd_eleicao
+(
+    "cd-eleicao" integer[] NOT NULL,
+    "cd-tipo-eleicao" integer[] NOT NULL,
+    CONSTRAINT cdeleicao_pkey PRIMARY KEY ("cd-eleicao")
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS eleicoes.cd_eleicao
+    OWNER to postgres;
+
+GRANT ALL ON TABLE eleicoes.cd_eleicao TO postgres;
+CREATE TABLE IF NOT EXISTS eleicoes.dataeleicao
+(
+    "ano-eleicao" integer[] NOT NULL,
+    "dt-eleicao" integer[] NOT NULL,
+    "cd-eleicao" integer[] NOT NULL,
+    CONSTRAINT dataeleicao_pkey PRIMARY KEY ("ano-eleicao"),
+    CONSTRAINT fk_cddata FOREIGN KEY ("cd-eleicao")
+        REFERENCES eleicoes.cd_eleicao ("cd-eleicao") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+CREATE TABLE IF NOT EXISTS eleicoes.datageracao
+(
+    "dt-geracao" integer[] NOT NULL,
+    "hh-geracao" integer[] NOT NULL,
+    "cd-eleicao" integer[] NOT NULL,
+    CONSTRAINT datageracao_pkey PRIMARY KEY ("dt-geracao"),
+    CONSTRAINT fk_cddatag FOREIGN KEY ("cd-eleicao")
+        REFERENCES eleicoes.cd_eleicao ("cd-eleicao") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS eleicoes.datageracao
+    OWNER to postgres;
+
+GRANT ALL ON TABLE eleicoes.datageracao TO postgres;
+CREATE TABLE IF NOT EXISTS eleicoes.localeleicao
+(
+    "sg-uf" character varying[] COLLATE pg_catalog."default" NOT NULL,
+    "sg-ue" integer[] NOT NULL,
+    "cd-municipio" integer[] NOT NULL,
+    CONSTRAINT localeleicao_pkey PRIMARY KEY ("sg-uf"),
+    CONSTRAINT fk_loctipo FOREIGN KEY ("cd-municipio")
+        REFERENCES eleicoes.localvotacao ("cd-municipio") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS eleicoes.localeleicao
+    OWNER to postgres;
+
+GRANT ALL ON TABLE eleicoes.localeleicao TO postgres;
+CREATE TABLE IF NOT EXISTS eleicoes.localvotacao
+(
+    "nr-zona" integer[] NOT NULL,
+    "nr-secao" integer[] NOT NULL,
+    "cd-municipio" integer[] NOT NULL,
+    CONSTRAINT localvotacao_pkey PRIMARY KEY ("cd-municipio")
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS eleicoes.localvotacao
+    OWNER to postgres;
+
+GRANT ALL ON TABLE eleicoes.localvotacao TO postgres;
+CREATE TABLE IF NOT EXISTS eleicoes.nomeeleicao
+(
+    "ds-eleicao" character varying[] COLLATE pg_catalog."default" NOT NULL,
+    "nm-tipo-eleicao" character varying[] COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT nomeeleicao_pkey PRIMARY KEY ("ds-eleicao")
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS eleicoes.nomeeleicao
+    OWNER to postgres;
+
+GRANT ALL ON TABLE eleicoes.nomeeleicao TO postgres;
+CREATE TABLE IF NOT EXISTS eleicoes.nomelocalvotacao
+(
+    "nm-ue" character varying[] COLLATE pg_catalog."default" NOT NULL,
+    "nm-municipio" character varying[] COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT nomelocalvotacao_pkey PRIMARY KEY ("nm-ue")
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS eleicoes.nomelocalvotacao
+    OWNER to postgres;
+
+GRANT ALL ON TABLE eleicoes.nomelocalvotacao TO postgres;
+CREATE TABLE IF NOT EXISTS eleicoes.numerocandidato
+(
+    "nr-votavel" integer[] NOT NULL,
+    "nm-votavel" character varying[] COLLATE pg_catalog."default" NOT NULL,
+    "cd-cargo" integer[] NOT NULL,
+    CONSTRAINT numerocandidato_pkey PRIMARY KEY ("nr-votavel"),
+    CONSTRAINT fk_numcarg FOREIGN KEY ("cd-cargo")
+        REFERENCES eleicoes.cargocandidato ("cd-cargo") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS eleicoes.numerocandidato
+    OWNER to postgres;
+
+GRANT ALL ON TABLE eleicoes.numerocandidato TO postgres;
+CREATE TABLE IF NOT EXISTS eleicoes.tipoeleicao
+(
+    "cd-tipo-eleicao" integer[] NOT NULL,
+    "cd-eleicao" integer[] NOT NULL,
+    "cd-cargo" integer[] NOT NULL,
+    CONSTRAINT tipoeleicao_pkey PRIMARY KEY ("cd-tipo-eleicao"),
+    CONSTRAINT fk_tipcarg FOREIGN KEY ("cd-cargo")
+        REFERENCES eleicoes.cargocandidato ("cd-cargo") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS eleicoes.tipoeleicao
+    OWNER to postgres;
+
+GRANT ALL ON TABLE eleicoes.tipoeleicao TO postgres;
+CREATE TABLE IF NOT EXISTS eleicoes.turnoeleicao
+(
+    "nr-turno" integer[] NOT NULL,
+    "tp-abrangecia" character varying[] COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT turnoeleicao_pkey PRIMARY KEY ("nr-turno")
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS eleicoes.turnoeleicao
+    OWNER to postgres;
+
+GRANT ALL ON TABLE eleicoes.turnoeleicao TO postgres;
+CREATE TABLE IF NOT EXISTS eleicoes.votoscandidato
+(
+    "qt-votos" integer[] NOT NULL,
+    "nr-turno" integer[] NOT NULL,
+    "cd-eleicao" integer[] NOT NULL,
+    CONSTRAINT votoscandidato_pkey PRIMARY KEY ("qt-votos"),
+    CONSTRAINT fk_cddatag FOREIGN KEY ("cd-eleicao")
+        REFERENCES eleicoes.cd_eleicao ("cd-eleicao") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_turvot FOREIGN KEY ("nr-turno")
+        REFERENCES eleicoes.turnoeleicao ("nr-turno") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS eleicoes.votoscandidato
+    OWNER to postgres;
+
+GRANT ALL ON TABLE eleicoes.votoscandidato TO postgres;
